@@ -73,5 +73,6 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install -y jenkins
     apt-get install git
+    apt-get install git-ftp
   SHELL
 end
