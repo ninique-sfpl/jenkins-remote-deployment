@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
   # via 127.0.0.1 to disable public access
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.18"
+  config.vm.network "private_network", ip: "192.168.53.18"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -67,13 +67,11 @@ Vagrant.configure("2") do |config|
 
     wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
     echo deb https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
-    sudo apt-get update
-    sudo apt-get install jenkins -y
-    sudo systemctl start jenkins
-    sudo systemctl status jenkins
-    sudo ufw allow 8080
-    sudo ufw status
-    sudo ufw allow OpenSSH
-    sudo ufw enable
+
+    mkdir -p /etc/opt/sources.list.d/
+    sh -c "echo 'deb http://pkg.jenkins-ci.org/debian binary/ ' > /etc/opt/sources.list.d/jenkins.list"
+    apt-get update
+    apt-get install -y jenkins
+    apt-get install git
   SHELL
 end
